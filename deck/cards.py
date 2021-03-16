@@ -1,8 +1,7 @@
 import requests
-import json
 
 
-class Cards:
+class cards():
 
     def deck_of_cards_id(self):
         response = requests.get('https://deckofcardsapi.com/api/deck/new/shuffle/?cards=AS,AD,AC,AH,2S,2D,2C,2H,3S,3D,'
@@ -13,13 +12,4 @@ class Cards:
             return response.json()['deck_id']
         else:
             print(response.status_code)
-            exit()
-
-    def deliver_cards(self, deck_id, quantity):
-        cards = requests.get('https://deckofcardsapi.com/api/deck/' + str(deck_id) + '/draw/?count=' + str(quantity))
-
-        if cards.status_code == 200:
-            return cards.json()
-        else:
-            print(cards.status_code)
             exit()
