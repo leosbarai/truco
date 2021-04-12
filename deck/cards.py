@@ -1,7 +1,7 @@
 import requests
 
 
-class cards():
+class Cards:
 
     def deck_of_cards_id(self):
         response = requests.get('https://deckofcardsapi.com/api/deck/new/shuffle/?cards=AS,AD,AC,AH,2S,2D,2C,2H,3S,3D,'
