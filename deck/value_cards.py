@@ -1,7 +1,3 @@
-from deck.cards import Cards
-from deck.deliver_cards import DeliverCards
-
-
 def assigns_value_cards(cards):
     switcher = {
         "QUEEN": 8,
