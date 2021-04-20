@@ -32,8 +32,8 @@ class Game:
     # print(p1['cards'][1]['code'])
     # print(p1['cards'][2]['code'])
 
-    # for card in p1['cards']:
-    #     p1_cards[card.get('code')] = card.get('value')
+    for card in p1['cards']:
+        p1_cards[card.get('code')] = card.get('value')
 
     # for card in p1['cards']:
     #     p1_cards[card.get('code')] = cards_value(card.get('value'))
