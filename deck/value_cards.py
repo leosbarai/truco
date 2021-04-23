@@ -21,6 +21,8 @@ def suits_value(value):
 
 
 def get_manilha(value):
+    value = assigns_value_cards(value)
+
     switcher = {
         1: 2,
         2: 3,
@@ -37,7 +39,7 @@ def get_manilha(value):
 
 
 def get_value_cards(player_cards, turned_card):
-    manilha = get_manilha(int(turned_card[0].get('value')))
+    manilha = get_manilha(turned_card[0].get('value'))
 
     for card in player_cards:
         card['value'] = assigns_value_cards(card.get('value'))
