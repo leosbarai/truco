@@ -1,5 +1,7 @@
 import requests
 
+from api.deck.urls import URLs
+
 
 class DeliverCards:
 
@@ -7,13 +9,14 @@ class DeliverCards:
         self._deck_id = deck_id
 
     def get_cards(self, quantity):
-        cards = requests.get('https://deckofcardsapi.com/api/deck/' + str(self._deck_id) + '/draw/?count='
+        cards = requests.get(URLs.api_base + self._deck_id + URLs.api_base_count
                              + str(quantity))
 
         if cards.status_code == 200:
+            print('Cartas retornadas!')
             return cards.json()['cards']
         else:
-            print(cards.status_code)
+            print("Erro no retorno: " + cards.status_code)
             exit()
 
     def turn_card(self):

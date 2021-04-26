@@ -1,19 +1,24 @@
-from deck.cards import Cards
-from deck.deliver_cards import DeliverCards
-from players.players import Players
-from deck.value_cards import *
+from api.deck.cards import Cards
+from api.deck.deliver_cards import DeliverCards
+from api.deck.value_cards import get_value_cards
+from api.players.players import Players
 
 
 class Game:
-    print("**********************************")
-    print("       Jogo de Truco!")
-    print("**********************************")
+    print('''
+            **********************************
+                    Jogo de Truco!
+            **********************************
+    ''')
 
     name_p1 = input('Digite o nome do primeiro jogador: ')
     name_p2 = input('Digite o nome do segundo jogador: ')
 
-    player1 = Players(name_p1)
-    player2 = Players(name_p2)
+    player1 = Players()
+    player1.name = player1.name_validate(name_p1, 1)
+
+    player2 = Players()
+    player2.name = player2.name_validate(name_p2, 2)
 
     cards = DeliverCards(Cards.deck_of_cards_id())
 
