@@ -13,5 +13,5 @@ class Cards:
             print('Deck id retornado!')
             return str(response.json()['deck_id'])
         else:
-            print("Erro no retorno" + response.status_code)
+            print("Erro no retorno" + str(response.status_code))
             exit()

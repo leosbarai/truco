@@ -16,7 +16,7 @@ class DeliverCards:
             print('Cartas retornadas!')
             return cards.json()['cards']
         else:
-            print("Erro no retorno: " + cards.status_code)
+            print("Erro no retorno: " + str(cards.status_code))
             exit()
 
     def turn_card(self):
