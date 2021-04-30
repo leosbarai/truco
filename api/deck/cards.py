@@ -1,4 +1,4 @@
-import requests
+import requests as requests
 
 from api.deck.urls import URLs
 

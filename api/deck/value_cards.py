@@ -48,3 +48,11 @@ def get_value_cards(player_cards, turned_card):
             card['value'] = suits_value(card.get('suit'))
 
     return player_cards
+
+
+def code_cards(cards):
+    code_cards = []
+    for card in cards:
+        code_cards.append(card['code'])
+
+    return code_cards
