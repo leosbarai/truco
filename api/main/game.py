@@ -27,19 +27,19 @@ class Game:
     player1.my_turn = True
     round = 1
 
+    cards = DeliverCards(Cards.deck_of_cards_id())
+    turned_card = cards.turn_card()
+    player1_cards = cards.player_cards()
+    player2_cards = cards.player_cards()
+
+    player1.cards = get_value_cards(player1_cards, turned_card)
+    player2.cards = get_value_cards(player2_cards, turned_card)
+
     while score_player1 < final_round or score_player2 < final_round:
-        cards = DeliverCards(Cards.deck_of_cards_id())
-        turned_card = cards.turn_card()
-        player1_cards = cards.player_cards()
-        player2_cards = cards.player_cards()
-
-        player1.cards = get_value_cards(player1_cards, turned_card)
-        player2.cards = get_value_cards(player2_cards, turned_card)
-
         print('********** ' + str(round) + 'ª RODADA **********')
         print('Tombo: ' + turned_card[0]['code'])
 
-        while player1.not_played and player2.not_played:
+        while player1.not_played or player2.not_played:
             if player1.my_turn:
                 cards = code_cards(player1.cards)
                 print('Cartas do jogador ' + player1.name + ': ' + str(cards))
@@ -51,13 +51,13 @@ class Game:
 
                 for card in player1.cards:
                     if card['code'] == chosen_card:
-                        value_card_p1 = card['value']
+                        value_card_p1 = int(card['value'])
                         print('Carta ' + chosen_card + ' na mesa!')
-                        # del (player1_cards[card])
+                        player1_cards.remove(card)
 
-                player1.not_played = False
-                player1.not_played = False
-            elif player2.my_turn:
+                player1.not_played = False  # criar função de jogador atual
+                player1.my_turn = False
+            else:
                 cards = code_cards(player2.cards)
                 print('Cartas do jogador ' + player2.name + ': ' + str(cards))
                 chosen_card = str(input('Escolha uma carta: ')).upper()
@@ -68,9 +68,9 @@ class Game:
 
                 for card in player2.cards:
                     if card['code'] == chosen_card:
-                        value_card_p2 = card['value']
+                        value_card_p2 = int(card['value'])
                         print('Carta ' + chosen_card + ' na mesa!')
-                        # del (player2_cards[card])
+                        player2_cards.remove(card)
 
                 player2.not_played = False
                 player2.my_turn = False
@@ -79,12 +79,12 @@ class Game:
             score_player1 += 1
             player1.my_turn = True
             player2.my_turn = False
-            print('Jogador ' + player1.name + ' venceu a ' + round + 'ª rodada.')
+            print('Jogador ' + player1.name + ' venceu a ' + str(round) + 'ª rodada.')
         else:
             score_player2 += 1
             player1.my_turn = False
             player2.my_turn = True
-            print('Jogador ' + player2.name + ' venceu a ' + round + 'ª rodada.')
+            print('Jogador ' + player2.name + ' venceu a ' + str(round) + 'ª rodada.')
 
         round += 1
 
