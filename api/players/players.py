@@ -4,6 +4,7 @@ class Players:
         self.name = name
         self.cards = {}
         self.my_turn = False
+        self.not_played = True
 
     def name_validate(self, name, number):
         if name == '':
