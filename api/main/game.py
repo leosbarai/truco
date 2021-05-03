@@ -86,6 +86,8 @@ class Game:
             player2.my_turn = True
             print('Jogador ' + player2.name + ' venceu a ' + str(round) + 'ª rodada.')
 
+        player1.not_played = True
+        player2.not_played = True
         round += 1
 
     if score_player1 > score_player2:

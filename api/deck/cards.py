@@ -1,6 +1,7 @@
-import requests as requests
-
 from api.deck.urls import URLs
+
+import logging
+import requests as requests
 
 
 class Cards:
@@ -10,8 +11,8 @@ class Cards:
         response = requests.get(URLs.api_base + URLs.api_shuffle_cards + URLs.cards_list)
 
         if response.status_code == 200:
-            print('Deck id retornado!')
+            logging.warning('Deck id retornado!')
             return str(response.json()['deck_id'])
         else:
-            print("Erro no retorno" + str(response.status_code))
+            logging.warning("Erro no retorno" + str(response.status_code))
             exit()
