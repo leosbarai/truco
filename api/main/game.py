@@ -2,6 +2,7 @@ from api.deck.cards import Cards
 from api.deck.deliver_cards import DeliverCards
 from api.deck.value_cards import get_value_cards, code_cards
 from api.players.players import Players
+from api.rules.table import Table
 
 
 class Game:
@@ -11,29 +12,11 @@ class Game:
             **********************************
     ''')
 
-    name_p1 = input('Digite o nome do primeiro jogador: ')
-    name_p2 = input('Digite o nome do segundo jogador: ')
-
-    player1 = Players()
-    player1.name = player1.name_validate(name_p1, 1)
-
-    player2 = Players()
-    player2.name = player2.name_validate(name_p2, 2)
-
-    score_player1 = 0
-    score_player2 = 0
-    final_score = 12
-    final_round = 2
-    player1.my_turn = True
-    round = 1
-
-    cards = DeliverCards(Cards.deck_of_cards_id())
-    turned_card = cards.turn_card()
-    player1_cards = cards.player_cards()
-    player2_cards = cards.player_cards()
-
-    player1.cards = get_value_cards(player1_cards, turned_card)
-    player2.cards = get_value_cards(player2_cards, turned_card)
+    players_qtt = int(input('Informe o número de participantes: '))
+    table = Table(players_qtt)
+    table.players_validate()
+    table.players_create()
+    table.card_distribution()
 
     while score_player1 < final_round or score_player2 < final_round:
         print('********** ' + str(round) + 'ª RODADA **********')
