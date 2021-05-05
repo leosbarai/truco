@@ -1,7 +1,4 @@
-from api.deck.cards import Cards
-from api.deck.deliver_cards import DeliverCards
-from api.deck.value_cards import get_value_cards, code_cards
-from api.players.players import Players
+from api.deck.value_cards import code_cards
 from api.rules.table import Table
 
 
@@ -16,11 +13,16 @@ class Game:
     table = Table(players_qtt)
     table.players_validate()
     table.players_create()
-    table.card_distribution()
 
-    while score_player1 < final_round or score_player2 < final_round:
-        print('********** ' + str(round) + 'ª RODADA **********')
-        print('Tombo: ' + turned_card[0]['code'])
+    while not table.end_game:
+        table.card_distribution()
+        print('********** ' + str(table.round) + 'ª RODADA **********')
+        print('Tombo: ' + table.turned_card['code'])
+
+        for player in table.players:
+            while not player.played:
+
+
 
         while player1.not_played or player2.not_played:
             if player1.my_turn:
@@ -73,7 +75,7 @@ class Game:
         player2.not_played = True
         round += 1
 
-    if score_player1 > score_player2:
-        player1.winner_message()
-    else:
-        player2.winner_message()
+        for players in table.players:
+            if players.score == table.final_round:
+                players.winner_message()
+                table.end_game = True

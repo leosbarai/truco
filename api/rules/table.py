@@ -14,6 +14,7 @@ class Table():
         self.final_score = 12
         self.round = 1
         self.final_round = 2
+        self.end_game = False
 
     def players_validate(self):
         while self.players_qtt not in self.number_of_players_allowed:
@@ -32,6 +33,5 @@ class Table():
     def card_distribution(self):
         cards = DeliverCards(Cards.deck_of_cards_id())
         self.turned_card = cards.turn_card()
-        # player1_cards = cards.player_cards()
         for players in self.players:
             players.cards = get_value_cards(cards.player_cards(), self.turned_card)
