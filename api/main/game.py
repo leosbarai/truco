@@ -17,48 +17,25 @@ class Game:
     while not table.end_game:
         table.card_distribution()
         print('********** ' + str(table.round) + 'ª RODADA **********')
-        print('Tombo: ' + table.turned_card['code'])
+        print('Tombo: ' + table.turned_card[0]['code'])
 
         for player in table.players:
             while not player.played:
-
-
-
-        while player1.not_played or player2.not_played:
-            if player1.my_turn:
-                cards = code_cards(player1.cards)
-                print('Cartas do jogador ' + player1.name + ': ' + str(cards))
+                cards = code_cards(player.cards)
+                print('Cartas do jogador ' + player.name + ': ' + str(cards))
                 chosen_card = str(input('Escolha uma carta: ')).upper()
 
                 while chosen_card not in cards:
-                    print('Cartas do jogador ' + player1.name + ': ' + str(cards))
+                    print('Cartas do jogador ' + player.name + ': ' + str(cards))
                     chosen_card = str(input('Carta inválida, escolha novamente: ')).upper()
 
-                for card in player1.cards:
+                for card in player.cards:
                     if card['code'] == chosen_card:
-                        value_card_p1 = int(card['value'])
+                        player.value_card = int(card['value'])
                         print('Carta ' + chosen_card + ' na mesa!')
-                        player1_cards.remove(card)
+                        player.cards.remove(card)
 
-                player1.not_played = False  # criar função de jogador atual
-                player1.my_turn = False
-            else:
-                cards = code_cards(player2.cards)
-                print('Cartas do jogador ' + player2.name + ': ' + str(cards))
-                chosen_card = str(input('Escolha uma carta: ')).upper()
-
-                while chosen_card not in cards:
-                    print('Cartas do jogador ' + player2.name + ': ' + str(cards))
-                    chosen_card = str(input('Carta inválida, escolha novamente: ')).upper()
-
-                for card in player2.cards:
-                    if card['code'] == chosen_card:
-                        value_card_p2 = int(card['value'])
-                        print('Carta ' + chosen_card + ' na mesa!')
-                        player2_cards.remove(card)
-
-                player2.not_played = False
-                player2.my_turn = False
+                player.played = True
 
         if value_card_p1 > value_card_p2:
             score_player1 += 1
