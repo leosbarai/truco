@@ -16,7 +16,7 @@ class Players:
             return name
 
     def winner_message(self):
-        print("Parabéns, " + self.name + "você ganhou!")
+        print("Parabéns, " + self.name + ", você venceu o jogo!")
         print("       ___________      ")
         print("      '._==_==_=_.'     ")
         print("      .-\\:      /-.    ")

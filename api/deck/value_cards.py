@@ -4,8 +4,8 @@ def assigns_value_cards(cards):
         "JACK": 9,
         "KING": 10,
         "ACE": 11,
-        2: 12,
-        3: 13
+        "2": 12,
+        "3": 13
     }
     return switcher.get(cards, cards)
 

@@ -16,8 +16,10 @@ class Game:
 
     while not table.end_game:
         table.card_distribution()
-        while table.round < table.final_round:
-            print('********** ' + str(table.round) + 'ª RODADA **********')
+        round = 1
+        value = 0
+        while value < table.final_round:
+            print('********** ' + str(round) + 'ª RODADA **********')
             print('Tombo: ' + table.turned_card[0]['code'])
 
             for player in table.players:
@@ -40,12 +42,15 @@ class Game:
 
             round_winner = max(table.players, key=lambda card: card.card_value)
             round_winner.score += 1
-            print('Jogador ' + round_winner.name + ' venceu a ' + str(table.round) + 'ª rodada.')
+            print(round_winner.name + ' venceu a ' + str(round) + 'ª rodada.')
 
             for players in table.players:
                 players.played = False
 
-            table.round += 1
+            value = max(player.score for player in table.players)
+            round += 1
+
+        table.end_game = True
 
     for players in table.players:
         if players.score == table.final_round:

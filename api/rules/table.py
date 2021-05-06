@@ -12,8 +12,7 @@ class Table:
         self.players = []
         self.turned_card = []
         self.final_score = 12
-        self.round = 1
-        self.final_round = 3
+        self.final_round = 2
         self.end_game = False
 
     def players_validate(self):
