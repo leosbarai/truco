@@ -15,7 +15,7 @@ class DeliverCards:
                              + str(quantity))
 
         if cards.status_code == 200:
-            logging.debug('Cartas retornadas!')
+            logging.warning('Cartas retornadas!')
             return cards.json()['cards']
         else:
             logging.error("Erro no retorno: " + str(cards.status_code))

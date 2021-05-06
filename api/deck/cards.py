@@ -11,7 +11,7 @@ class Cards:
         response = requests.get(URLs.api_base + URLs.api_shuffle_cards + URLs.cards_list)
 
         if response.status_code == 200:
-            logging.debug('Deck id retornado!')
+            logging.warning('Deck id retornado!')
             return str(response.json()['deck_id'])
         else:
             logging.error("Erro no retorno" + str(response.status_code))
