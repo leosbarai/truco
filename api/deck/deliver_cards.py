@@ -1,4 +1,5 @@
 import logging
+
 import requests
 
 from api.deck.urls import URLs

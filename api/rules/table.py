@@ -4,7 +4,7 @@ from api.deck.value_cards import get_value_cards
 from api.players.players import Players
 
 
-class Table():
+class Table:
 
     def __init__(self, players_qtt):
         self.players_qtt = players_qtt
@@ -13,7 +13,7 @@ class Table():
         self.turned_card = []
         self.final_score = 12
         self.round = 1
-        self.final_round = 2
+        self.final_round = 3
         self.end_game = False
 
     def players_validate(self):
