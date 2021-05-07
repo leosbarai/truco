@@ -5,7 +5,7 @@ from api.rules.table import Table
 class Game:
     print('''
             **********************************
-                    Jogo de Truco!
+                      Jogo de Truco!
             **********************************
     ''')
 
