@@ -4,8 +4,8 @@ def assigns_value_cards(cards):
         "JACK": 9,
         "KING": 10,
         "ACE": 11,
-        2: 12,
-        3: 13
+        "2": 12,
+        "3": 13
     }
     return switcher.get(cards, cards)
 
@@ -45,6 +45,14 @@ def get_value_cards(player_cards, turned_card):
         card['value'] = assigns_value_cards(card.get('value'))
 
         if card['value'] == manilha:
-            card['value'] = suits_value(card.get('suit'))
+            card['value'] = suits_value(str(card.get('suit')))
 
     return player_cards
+
+
+def code_cards(cards):
+    code_cards = []
+    for card in cards:
+        code_cards.append(card['code'])
+
+    return code_cards

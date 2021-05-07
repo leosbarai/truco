@@ -1,39 +1,58 @@
-from api.deck.cards import Cards
-from api.deck.deliver_cards import DeliverCards
-from api.deck.value_cards import get_value_cards
-from api.players.players import Players
+from api.deck.value_cards import code_cards
+from api.rules.table import Table
 
 
 class Game:
     print('''
             **********************************
-                    Jogo de Truco!
+                      Jogo de Truco!
             **********************************
     ''')
 
-    name_p1 = input('Digite o nome do primeiro jogador: ')
-    name_p2 = input('Digite o nome do segundo jogador: ')
+    players_qtt = int(input('Informe o número de participantes: '))
+    table = Table(players_qtt)
+    table.players_validate()
+    table.players_create()
 
-    player1 = Players()
-    player1.name = player1.name_validate(name_p1, 1)
+    while not table.end_game:
+        table.card_distribution()
+        round = 1
+        value = 0
+        while value < table.final_round:
+            print('********** ' + str(round) + 'ª RODADA **********')
+            print('Tombo: ' + table.turned_card[0]['code'])
 
-    player2 = Players()
-    player2.name = player2.name_validate(name_p2, 2)
+            for player in table.players:
+                while not player.played:
+                    cards = code_cards(player.cards)
+                    print('Cartas do jogador ' + player.name + ': ' + str(cards))
+                    chosen_card = str(input('Escolha uma carta: ')).upper()
 
-    cards = DeliverCards(Cards.deck_of_cards_id())
+                    while chosen_card not in cards:
+                        print('Cartas do jogador ' + player.name + ': ' + str(cards))
+                        chosen_card = str(input('Carta inválida, escolha novamente: ')).upper()
 
-    turned_card = cards.turn_card()
+                    for card in player.cards:
+                        if card['code'] == chosen_card:
+                            player.card_value = int(card['value'])
+                            print('Carta ' + chosen_card + ' na mesa!')
+                            player.cards.remove(card)
 
-    player1_cards = cards.player_cards()
+                    player.played = True
 
-    player2_cards = cards.player_cards()
+            round_winner = max(table.players, key=lambda card: card.card_value)
+            round_winner.score += 1
+            print(round_winner.name + ' venceu a ' + str(round) + 'ª rodada.')
 
-    player1.cards = get_value_cards(player1_cards, turned_card)
-    player2.cards = get_value_cards(player2_cards, turned_card)
+            for players in table.players:
+                players.played = False
 
-    print('Vira: ')
-    print(turned_card)
-    print('Cartas do ' + player1.name + ': ')
-    print(player1.cards)
-    print('Cartas do ' + player2.name + ': ')
-    print(player2.cards)
+            value = max(player.score for player in table.players)
+            round += 1
+
+        table.end_game = True
+
+    for players in table.players:
+        if players.score == table.final_round:
+            players.winner_message()
+            table.end_game = True

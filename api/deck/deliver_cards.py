@@ -1,3 +1,5 @@
+import logging
+
 import requests
 
 from api.deck.urls import URLs
@@ -13,10 +15,10 @@ class DeliverCards:
                              + str(quantity))
 
         if cards.status_code == 200:
-            print('Cartas retornadas!')
+            logging.warning('Cartas retornadas!')
             return cards.json()['cards']
         else:
-            print("Erro no retorno: " + str(cards.status_code))
+            logging.error("Erro no retorno: " + str(cards.status_code))
             exit()
 
     def turn_card(self):
