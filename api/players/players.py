@@ -3,6 +3,7 @@ class Players:
     def __init__(self, name=''):
         self.name = name
         self.cards = {}
+        self.round_score = 0
         self.score = 0
         self.card_value = 0
         self.my_turn = False

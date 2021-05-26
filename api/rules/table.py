@@ -14,6 +14,9 @@ class Table:
         self.final_score = 12
         self.final_round = 2
         self.end_game = False
+        self.round = 1
+        self.round_value = 0
+        self.match_value = 1
 
     def players_validate(self):
         while self.players_qtt not in self.number_of_players_allowed:
@@ -38,10 +41,9 @@ class Table:
     def play(self):
         while not self.end_game:
             self.card_distribution()
-            round = 1
-            value = 0
-            while value < self.final_round:
-                print('********** ' + str(round) + 'ª RODADA **********')
+            self.erase_round()
+            while self.round_value < self.final_round:
+                print('********** ' + str(self.round) + 'ª RODADA **********')
                 print('Tombo: ' + self.turned_card[0]['code'])
 
                 for player in self.players:
@@ -63,19 +65,31 @@ class Table:
                         player.played = True
 
                 round_winner = max(self.players, key=lambda card: card.card_value)
-                round_winner.score += 1
-                print(round_winner.name + ' venceu a ' + str(round) + 'ª rodada.')
+                round_winner.round_score += 1
+                print(round_winner.name + ' venceu a ' + str(self.round) + 'ª rodada.')
 
-                for players in self.players:
-                    players.played = False
+                self.round_value = max(player.round_score for player in self.players)
+                self.round += 1
+                self.not_played()
 
-                value = max(player.score for player in self.players)
-                round += 1
+            round_winner.score += 1
+            print(round_winner.name + ' = ' + str(round_winner.score))
+            self.end_game = self.is_end_game()
 
-            self.end_game = True
-            self.winning_player()
-
-    def winning_player(self):
+    def is_end_game(self):
         for players in self.players:
-            if players.score == self.final_round:
+            if players.score >= self.final_score:
                 players.winner_message()
+                return True
+            else:
+                False
+
+    def not_played(self):
+        for players in self.players:
+            players.played = False
+
+    def erase_round(self):
+        self.round = 1
+        self.round_value = 0
+        for players in self.players:
+            players.round_score = 0
