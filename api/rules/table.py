@@ -42,6 +42,7 @@ class Table:
         while not self.end_game:
             self.card_distribution()
             self.erase_round()
+            round_score = 1
             while self.round_value < self.final_round:
                 print('********** ' + str(self.round) + 'ª RODADA **********')
                 print('Tombo: ' + self.turned_card[0]['code'])
@@ -50,8 +51,14 @@ class Table:
                     while not player.played:
                         cards = code_cards(player.cards)
                         print('Cartas do jogador ' + player.name + ': ' + str(cards))
-                        chosen_card = str(input('Escolha uma carta: ')).upper()
 
+                        if round_score < 3:
+                            response = input('Deseja pedir TRUCO? [S/N]')
+                            if response[0].upper() == 'S':
+                                response = input('Jogador ' + player.name + ' pediu TRUCO, você aceita? [S/N]')
+
+
+                        chosen_card = str(input('Escolha uma carta: ')).upper()
                         while chosen_card not in cards:
                             print('Cartas do jogador ' + player.name + ': ' + str(cards))
                             chosen_card = str(input('Carta inválida, escolha novamente: ')).upper()
@@ -72,7 +79,7 @@ class Table:
                 self.round += 1
                 self.not_played()
 
-            round_winner.score += 1
+            round_winner.score += round_score
             print(round_winner.name + ' = ' + str(round_winner.score))
             self.end_game = self.is_end_game()
 
