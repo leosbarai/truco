@@ -2,6 +2,7 @@ from api.deck.cards import Cards
 from api.deck.deliver_cards import DeliverCards
 from api.deck.value_cards import get_value_cards, code_cards
 from api.players.players import Players
+from api.rules.truco import Truco
 
 
 class Table:
@@ -49,19 +50,22 @@ class Table:
 
                 for player in self.players:
                     while not player.played:
+                        player.my_turn = True
                         cards = code_cards(player.cards)
                         print('Cartas do jogador ' + player.name + ': ' + str(cards))
 
-                        if round_score < 3:
-                            response = input('Deseja pedir TRUCO? [S/N]')
-                            if response[0].upper() == 'S':
-                                response = input('Jogador ' + player.name + ' pediu TRUCO, você aceita? [S/N]')
+                        truco = Truco(self)
+                        print('Escolha uma carta ', end="")
+                        truco.table_match_value()
 
+                        chosen_card = str(input('=> ')).upper()
 
-                        chosen_card = str(input('Escolha uma carta: ')).upper()
-                        while chosen_card not in cards:
-                            print('Cartas do jogador ' + player.name + ': ' + str(cards))
-                            chosen_card = str(input('Carta inválida, escolha novamente: ')).upper()
+                        if chosen_card[0] == 'S':
+                            print('XXX')
+                        else:
+                            while chosen_card not in cards:
+                                print('Cartas do jogador ' + player.name + ': ' + str(cards))
+                                chosen_card = str(input('Carta inválida, escolha novamente: ')).upper()
 
                         for card in player.cards:
                             if card['code'] == chosen_card:
@@ -70,6 +74,7 @@ class Table:
                                 player.cards.remove(card)
 
                         player.played = True
+                        player.my_turn = False
 
                 round_winner = max(self.players, key=lambda card: card.card_value)
                 round_winner.round_score += 1
