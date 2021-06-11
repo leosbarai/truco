@@ -6,6 +6,7 @@ class Players:
         self.round_score = 0
         self.score = 0
         self.card_value = 0
+        self.player_number = 0
         self.my_turn = False
         self.played = False
 

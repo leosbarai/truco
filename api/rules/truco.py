@@ -15,10 +15,39 @@ class Truco:
         elif self.table.match_value == 11:
             return print('=> NÃO É PERMITIDO TRUCAR NA MÃO DE 11 <=')
 
-        return print('ou tecle "S" se deseja pedir ' + score)
+        return score
 
-    # @classmethod
-    # def bet(cls):
-    #     players = cls.table.players
-    #     for player in players:
-    #         if player.my_turn:
+    def truco_value(self, score):
+        switcher = {
+            'TRUCO': 3,
+            'SEIS': 6,
+            'NOVE': 9,
+            'DOZE': 12
+        }
+        return switcher.get(score)
+
+    def gambling_2players(self, value):
+        switcher = {
+            1: 2,
+            2: 1
+        }
+        return switcher.get(value)
+
+    def bet(self):
+        answer = ['S', 'N']
+
+        for player in self.table.players:
+            if player.my_turn:
+                gambler_player = player.player_number
+                receiving_player = self.gambling_2players(player.player_number)
+
+        for player in self.table.players:
+            if player.player_number == receiving_player:
+                print("Jogador: " + player.name)
+                print("Aceita o pedido de ", end="")
+                print(self.table_match_value())
+                choice = str(input('Digite "S" para aceitar ou "N" para correr: ').upper())
+
+                if choice[0] == 'S':
+                    value = self.table.round_value = self.truco_value(self.table_match_value)
+                    print(value)

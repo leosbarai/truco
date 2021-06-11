@@ -26,10 +26,13 @@ class Table:
 
     def players_create(self):
         players = 1
+        player_number = 0
         while players <= self.players_qtt:
             name = input('Digite o nome do ' + str(players) + 'º jogador: ')
             player = Players()
             player.name = player.name_validate(name, players)
+            player_number += 1
+            player.player_number = player_number
             self.players.append(player)
             players += 1
 
@@ -56,12 +59,16 @@ class Table:
 
                         truco = Truco(self)
                         print('Escolha uma carta ', end="")
-                        truco.table_match_value()
+                        if self.match_value != 11:
+                            print('ou tecle "S" para pedir ', end="")
+                            print(truco.table_match_value())
+                        else:
+                            truco.table_match_value()
 
                         chosen_card = str(input('=> ')).upper()
 
                         if chosen_card[0] == 'S':
-                            print('XXX')
+                            truco.bet()
                         else:
                             while chosen_card not in cards:
                                 print('Cartas do jogador ' + player.name + ': ' + str(cards))
