@@ -34,20 +34,29 @@ class Truco:
         return switcher.get(value)
 
     def bet(self):
-        answer = ['S', 'N']
 
         for player in self.table.players:
             if player.my_turn:
                 gambler_player = player.player_number
                 receiving_player = self.gambling_2players(player.player_number)
 
+                response = self.gamble(receiving_player)
+                print(response)
+
+    def gamble(self, player_gambler):
         for player in self.table.players:
-            if player.player_number == receiving_player:
+            if player.player_number == player_gambler:
                 print("Jogador: " + player.name)
                 print("Aceita o pedido de ", end="")
-                print(self.table_match_value())
-                choice = str(input('Digite "S" para aceitar ou "N" para correr: ').upper())
+                print(self.table_match_value() + "?")
+                print('Digite "S" para aceitar ou "N" para correr: ')
+                choice = str(input('==> ').upper())
 
                 if choice[0] == 'S':
-                    value = self.table.round_value = self.truco_value(self.table_match_value)
-                    print(value)
+                    self.table.round_value = self.truco_value(self.table_match_value())
+                    next_value = self.table_match_value()
+                    print('Deseja pedir ' + next_value + '? Digite "S" para aceitar ou "N" para seguir com o jogo.')
+                    response = str(input('==> ').upper())
+                    return response
+                else:
+                    exit()
