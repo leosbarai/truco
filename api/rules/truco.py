@@ -53,7 +53,7 @@ class Truco:
                 choice = str(input('==> ').upper())
 
                 if choice[0] == 'S':
-                    self.table.round_value = self.truco_value(self.table_match_value())
+                    self.table.match_value = self.truco_value(self.table_match_value())
                     next_value = self.table_match_value()
                     print('Deseja pedir ' + next_value + '? Digite "S" para aceitar ou "N" para seguir com o jogo.')
                     response = str(input('==> ').upper())
