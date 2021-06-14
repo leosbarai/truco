@@ -49,6 +49,7 @@ class Table:
             self.card_distribution()
             self.erase_round()
             round_score = 1
+            self.match_value = 1
             while self.round_value < self.final_round:
                 self.clear()
                 print('********** ' + str(self.round) + 'ª RODADA **********')
@@ -100,7 +101,7 @@ class Table:
                 self.not_played()
 
             round_winner.score += self.match_value
-            print('\n' + round_winner.name + ' = ' + str(round_winner.score))
+            self.show_score()
             self.end_game = self.is_end_game()
 
     def show_cards(self, player):
@@ -128,3 +129,8 @@ class Table:
 
     def clear(self):
         os.system('cls' if os.name == 'nt' else 'clear')
+
+    def show_score(self):
+        if self.players_qtt == 2:
+            for player in self.players:
+                print('Pontos do jogador: ' + player.name + ' = ' + str(player.score))
