@@ -41,7 +41,17 @@ class Truco:
                 receiving_player = self.gambling_2players(player.player_number)
 
                 response = self.gamble(receiving_player)
-                print(response)
+
+                if response:
+                    response = self.gamble(gambler_player)
+                    if response:
+                        response = self.gamble(receiving_player)
+                        if response:
+                            self.gamble(gambler_player)
+                    else:
+                        exit()
+                else:
+                    exit()
 
     def gamble(self, player_gambler):
         for player in self.table.players:
@@ -54,9 +64,13 @@ class Truco:
 
                 if choice[0] == 'S':
                     self.table.match_value = self.truco_value(self.table_match_value())
-                    next_value = self.table_match_value()
-                    print('Deseja pedir ' + next_value + '? Digite "S" para aceitar ou "N" para seguir com o jogo.')
-                    response = str(input('==> ').upper())
-                    return response
+                    if self.table.match_value < 12:
+                        next_value = self.table_match_value()
+                        print('Deseja pedir ' + next_value + '? Digite "S" para aceitar ou "N" para seguir com o jogo.')
+                        response = str(input('==> ').upper())
+                        if response[0] == 'S':
+                            return True
+                        else:
+                            return False
                 else:
                     exit()
