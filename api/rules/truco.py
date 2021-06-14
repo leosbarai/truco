@@ -1,3 +1,8 @@
+import os
+
+from api.deck.value_cards import code_cards
+
+
 class Truco:
 
     def __init__(self, table):
@@ -56,7 +61,11 @@ class Truco:
     def gamble(self, player_gambler):
         for player in self.table.players:
             if player.player_number == player_gambler:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 print("Jogador: " + player.name)
+                print('Tombo: ' + self.table.turned_card[0]['code'])
+                cards = code_cards(player.cards)
+                print('Cartas do jogador ' + player.name + ': ' + str(cards))
                 print("Aceita o pedido de ", end="")
                 print(self.table_match_value() + "?")
                 print('Digite "S" para aceitar ou "N" para correr: ')
@@ -66,7 +75,8 @@ class Truco:
                     self.table.match_value = self.truco_value(self.table_match_value())
                     if self.table.match_value < 12:
                         next_value = self.table_match_value()
-                        print('Deseja pedir ' + next_value + '? Digite "S" para aceitar ou "N" para seguir com o jogo.')
+                        print('Deseja pedir ' + next_value + '?')
+                        print('Digite "S" para aceitar ou "N" para seguir com o jogo.')
                         response = str(input('==> ').upper())
                         if response[0] == 'S':
                             return True

@@ -54,8 +54,7 @@ class Table:
                 for player in self.players:
                     while not player.played:
                         player.my_turn = True
-                        cards = code_cards(player.cards)
-                        print('Cartas do jogador ' + player.name + ': ' + str(cards))
+                        cards = self.show_cards(player)
 
                         truco = Truco(self)
                         print('Escolha uma carta ', end="")
@@ -69,6 +68,8 @@ class Table:
 
                         if chosen_card[0] == 'S':
                             truco.bet()
+                            self.show_cards(player)
+                            chosen_card = str(input('=> ')).upper()
                         else:
                             while chosen_card not in cards:
                                 print('Cartas do jogador ' + player.name + ': ' + str(cards))
@@ -94,6 +95,11 @@ class Table:
             round_winner.score += round_score
             print(round_winner.name + ' = ' + str(round_winner.score))
             self.end_game = self.is_end_game()
+
+    def show_cards(self, player):
+        cards = code_cards(player.cards)
+        print('Cartas do jogador ' + player.name + ': ' + str(cards))
+        return cards
 
     def is_end_game(self):
         for players in self.players:
