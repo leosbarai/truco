@@ -1,3 +1,5 @@
+import os
+
 from api.deck.cards import Cards
 from api.deck.deliver_cards import DeliverCards
 from api.deck.value_cards import get_value_cards, code_cards
@@ -48,6 +50,7 @@ class Table:
             self.erase_round()
             round_score = 1
             while self.round_value < self.final_round:
+                self.clear()
                 print('********** ' + str(self.round) + 'ª RODADA **********')
                 print('Tombo: ' + self.turned_card[0]['code'])
 
@@ -58,27 +61,31 @@ class Table:
 
                         truco = Truco(self)
                         print('Escolha uma carta ', end="")
-                        if self.match_value != 11:
+                        if self.match_value == 11:
+                            truco.table_match_value()
+                        elif self.match_value < 12:
                             print('ou tecle "S" para pedir ', end="")
                             print(truco.table_match_value())
-                        else:
-                            truco.table_match_value()
 
-                        chosen_card = str(input('=> ')).upper()
+                        chosen_card = str(input('==> ')).upper()
 
                         if chosen_card[0] == 'S':
                             truco.bet()
+                            self.clear()
+                            print('Tombo: ' + self.turned_card[0]['code'])
                             self.show_cards(player)
-                            chosen_card = str(input('=> ')).upper()
+                            chosen_card = str(input('==> ')).upper()
                         else:
                             while chosen_card not in cards:
                                 print('Cartas do jogador ' + player.name + ': ' + str(cards))
                                 chosen_card = str(input('Carta inválida, escolha novamente: ')).upper()
 
+                        self.clear()
+
                         for card in player.cards:
                             if card['code'] == chosen_card:
                                 player.card_value = int(card['value'])
-                                print('Carta ' + chosen_card + ' na mesa!')
+                                print('Carta ' + chosen_card + ' na mesa!\n')
                                 player.cards.remove(card)
 
                         player.played = True
@@ -92,8 +99,8 @@ class Table:
                 self.round += 1
                 self.not_played()
 
-            round_winner.score += round_score
-            print(round_winner.name + ' = ' + str(round_winner.score))
+            round_winner.score += self.match_value
+            print('\n' + round_winner.name + ' = ' + str(round_winner.score))
             self.end_game = self.is_end_game()
 
     def show_cards(self, player):
@@ -118,3 +125,6 @@ class Table:
         self.round_value = 0
         for players in self.players:
             players.round_score = 0
+
+    def clear(self):
+        os.system('cls' if os.name == 'nt' else 'clear')

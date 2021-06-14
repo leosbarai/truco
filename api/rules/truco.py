@@ -1,5 +1,3 @@
-import os
-
 from api.deck.value_cards import code_cards
 
 
@@ -48,10 +46,13 @@ class Truco:
                 response = self.gamble(receiving_player)
 
                 if response:
+                    self.table.clear()
                     response = self.gamble(gambler_player)
                     if response:
+                        self.table.clear()
                         response = self.gamble(receiving_player)
                         if response:
+                            self.table.clear()
                             self.gamble(gambler_player)
                     else:
                         exit()
@@ -61,8 +62,7 @@ class Truco:
     def gamble(self, player_gambler):
         for player in self.table.players:
             if player.player_number == player_gambler:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print("Jogador: " + player.name)
+                self.table.clear()
                 print('Tombo: ' + self.table.turned_card[0]['code'])
                 cards = code_cards(player.cards)
                 print('Cartas do jogador ' + player.name + ': ' + str(cards))
