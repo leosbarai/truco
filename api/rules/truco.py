@@ -37,7 +37,6 @@ class Truco:
         return switcher.get(value)
 
     def bet(self):
-
         for player in self.table.players:
             if player.my_turn:
                 gambler_player = player.player_number
@@ -55,9 +54,9 @@ class Truco:
                             self.table.clear()
                             self.gamble(gambler_player)
                     else:
-                        exit()
-                else:
-                    exit()
+                        continue
+                elif response is None:
+                    return False
 
     def gamble(self, player_gambler):
         for player in self.table.players:
@@ -82,5 +81,3 @@ class Truco:
                             return True
                         else:
                             return False
-                else:
-                    exit()
